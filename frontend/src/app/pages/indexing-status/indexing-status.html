@@ -1,0 +1,88 @@
+<div class="flex flex-col items-center justify-center min-h-screen px-4 bg-[#0c0c0c]">
+  <!-- Background Glow -->
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-primary/5 rounded-full blur-[150px] pointer-events-none"></div>
+
+  <div class="relative w-full max-w-xl p-8 border rounded-3xl bg-white/5 border-white/10 backdrop-blur-2xl shadow-2xl">
+    
+    <!-- Header -->
+    <div class="mb-8 text-center space-y-2">
+      <h2 class="text-3xl font-bold text-white">Repository Indexing</h2>
+      <p class="text-white/50">Processing repository structure and generating vector embeddings.</p>
+    </div>
+
+    <!-- Progress Bar Section -->
+    <div class="mb-10 space-y-4">
+      <div class="flex items-center justify-between text-sm font-medium">
+        <span class="text-primary">{{ status === 'ready' ? 'Indexing Complete' : 'Indexing in progress...' }}</span>
+        <span class="text-white/40">{{ overallProgress }}%</span>
+      </div>
+      <div class="h-3 overflow-hidden rounded-full bg-white/5">
+        <div 
+          class="h-full bg-primary transition-all duration-500 ease-out shadow-[0_0_20px_rgba(107,91,230,0.5)]"
+          [style.width.%]="overallProgress"
+        ></div>
+      </div>
+    </div>
+
+    <!-- Steps List -->
+    <div class="space-y-4">
+      <div 
+        *ngFor="let step of steps" 
+        class="flex items-center gap-4 p-4 rounded-2xl border border-transparent transition-all"
+        [class.bg-white/5]="step.status === 'processing'"
+        [class.border-white/5]="step.status === 'processing'"
+      >
+        <div 
+          class="flex items-center justify-center w-10 h-10 rounded-xl"
+          [class.bg-primary/20]="step.status === 'processing'"
+          [class.bg-green-500/10]="step.status === 'completed'"
+          [class.bg-white/5]="step.status === 'pending'"
+          [class.text-primary]="step.status === 'processing'"
+          [class.text-green-400]="step.status === 'completed'"
+          [class.text-white/20]="step.status === 'pending'"
+        >
+          <lucide-angular *ngIf="step.status !== 'processing'" [img]="step.icon" class="w-5 h-5"></lucide-angular>
+          <lucide-angular *ngIf="step.status === 'processing'" [img]="Loader2" class="w-5 h-5 animate-spin"></lucide-angular>
+        </div>
+        
+        <div class="flex-1">
+          <div class="text-sm font-semibold" [class.text-white]="step.status !== 'pending'" [class.text-white/40]="step.status === 'pending'">
+            {{ step.title }}
+          </div>
+          <div class="text-xs" [class.text-primary/70]="step.status === 'processing'" [class.text-green-500/70]="step.status === 'completed'" [class.text-white/20]="step.status === 'pending'">
+            {{ step.status === 'pending' ? 'Waiting...' : step.status === 'processing' ? 'Processing...' : 'Finished' }}
+          </div>
+        </div>
+
+        <lucide-angular 
+          *ngIf="step.status === 'completed'" 
+          [img]="CheckCircle2" 
+          class="w-5 h-5 text-green-400 animate-in zoom-in duration-500"
+        ></lucide-angular>
+      </div>
+    </div>
+
+    <!-- Ready Button -->
+    <div 
+      class="mt-10 overflow-hidden transition-all duration-700 ease-in-out"
+      [class.max-h-0]="status !== 'ready'"
+      [class.max-h-24]="status === 'ready'"
+      [class.opacity-0]="status !== 'ready'"
+      [class.opacity-100]="status === 'ready'"
+    >
+      <button 
+        (click) ="startChat()"
+        class="w-full h-14 bg-primary hover:bg-primary/90 text-white font-bold rounded-2xl transition-all shadow-lg shadow-primary/25 flex items-center justify-center gap-2"
+      >
+        <lucide-angular [img]="MessageSquare" class="w-5 h-5"></lucide-angular>
+        Start Chatting
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Note -->
+  <div class="mt-8 text-white/20 text-xs animate-pulse">
+    {{ status === 'indexing' ? 'Do not close this window while indexing is in progress.' : 'Repository is ready for analysis.' }}
+  </div>
+</div>

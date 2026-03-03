@@ -1,0 +1,93 @@
+<div class="relative flex flex-col items-center justify-center min-h-screen px-4 py-20 overflow-hidden">
+  <!-- Background Glows -->
+  <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 rounded-full blur-[120px]"></div>
+  <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px]"></div>
+
+  <!-- Content Container -->
+  <div class="relative w-full max-w-4xl space-y-12 text-center">
+    
+    <!-- Hero Section -->
+    <div class="space-y-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 text-sm font-medium border rounded-full bg-white/5 border-white/10 text-primary animate-fade-in">
+        <lucide-angular [img]="Sparkles" class="w-4 h-4"></lucide-angular>
+        <span>V1.0 is now live</span>
+      </div>
+      
+      <h1 class="text-5xl font-bold tracking-tight text-white md:text-7xl">
+        Understand any codebase <br />
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-400">in seconds.</span>
+      </h1>
+      
+      <p class="max-w-2xl mx-auto text-lg text-white/60">
+        DevStack uses AI to index, map and answer questions about your repository architecture. 
+        Grounded answers with file citations.
+      </p>
+    </div>
+
+    <!-- Repo Input Box -->
+    <div class="max-w-2xl p-2 mx-auto border rounded-2xl bg-white/5 border-white/10 backdrop-blur-xl shadow-2xl">
+      <div class="flex flex-col gap-2 md:flex-row">
+        <div class="relative flex-1">
+          <lucide-angular [img]="Github" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40"></lucide-angular>
+          <input 
+            type="text" 
+            [(ngModel)]="repoUrl"
+            placeholder="Paste public GitHub repository URL..."
+            class="w-full h-14 pl-12 pr-4 bg-transparent border-none rounded-xl text-white placeholder-white/20 focus:ring-2 focus:ring-primary/50 transition-all outline-none"
+          />
+        </div>
+        <button 
+          (click)="analyzeRepo()"
+          [disabled]="!repoUrl || isAnalyzing"
+          class="h-14 px-8 text-white font-semibold rounded-xl bg-primary hover:bg-primary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
+        >
+          <span *ngIf="!isAnalyzing">Analyze Repo</span>
+          <span *ngIf="isAnalyzing" class="flex items-center gap-2">
+            <div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+            Analyzing...
+          </span>
+          <lucide-angular *ngIf="!isAnalyzing" [img]="ArrowRight" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></lucide-angular>
+        </button>
+      </div>
+    </div>
+
+    <!-- Feature Grid -->
+    <div class="grid grid-cols-1 gap-6 text-left md:grid-cols-3">
+      <div class="p-6 border rounded-2xl bg-white/5 border-white/10 hover:bg-white/[0.08] transition-colors group">
+        <div class="w-12 h-12 mb-4 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+          <lucide-angular [img]="Cpu" class="w-6 h-6"></lucide-angular>
+        </div>
+        <h3 class="text-lg font-semibold text-white mb-2">Code Intelligence</h3>
+        <p class="text-sm text-white/50 leading-relaxed">
+          Structural parsing of files, functions, and classes to understand logic patterns.
+        </p>
+      </div>
+
+      <div class="p-6 border rounded-2xl bg-white/5 border-white/10 hover:bg-white/[0.08] transition-colors group">
+        <div class="w-12 h-12 mb-4 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
+          <lucide-angular [img]="Search" class="w-6 h-6"></lucide-angular>
+        </div>
+        <h3 class="text-lg font-semibold text-white mb-2">Semantic Search</h3>
+        <p class="text-sm text-white/50 leading-relaxed">
+          Vector-based indexing allows you to find relevance, not just exact keywords.
+        </p>
+      </div>
+
+      <div class="p-6 border rounded-2xl bg-white/5 border-white/10 hover:bg-white/[0.08] transition-colors group">
+        <div class="w-12 h-12 mb-4 rounded-xl bg-green-500/10 flex items-center justify-center text-green-400 group-hover:scale-110 transition-transform">
+          <lucide-angular [img]="MessageSquare" class="w-6 h-6"></lucide-angular>
+        </div>
+        <h3 class="text-lg font-semibold text-white mb-2">Grounded RAG</h3>
+        <p class="text-sm text-white/50 leading-relaxed">
+          AI answers that are strictly tied to the codebase with direct file citations.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="absolute bottom-8 text-white/30 text-sm">
+    © 2026 DevStack Repo Intelligence. All rights reserved.
+  </div>
+</div>
