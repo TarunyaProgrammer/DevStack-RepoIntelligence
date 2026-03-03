@@ -24,6 +24,7 @@
     "@angular/build": "^21.2.0",
     "@angular/cli": "^21.2.0",
     "@angular/compiler-cli": "^21.2.0",
+    "@tailwindcss/postcss": "^4.2.1",
     "autoprefixer": "^10.4.27",
     "lucide-angular": "^0.576.0",
     "postcss": "^8.5.8",
