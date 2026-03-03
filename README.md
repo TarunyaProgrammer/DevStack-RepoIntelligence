@@ -1,43 +1,108 @@
-# DevStack — Repo Intelligence
+# DevStack — Repo Intelligence 🚀
 
-**DevStack** is an AI-powered codebase intelligence platform that helps developers understand complex GitHub repositories in minutes, not days. Instead of manually tracing imports and reading files, you can simply ask the AI about the architecture, logic flows, or specific implementation details.
+**DevStack** is an AI-powered codebase intelligence platform. It enables developers to explore and understand complex GitHub repositories using RAG-powered chat, structural code parsing, and interactive visual mapping.
 
 ---
 
-## 🚀 The Goal
-To provide grounded, architecture-aware answers to code-related questions, complete with file citations and visual dependency maps.
+## 🌟 Features
+
+- **Codebase Indexing:** Paste any public GitHub repo URL and let DevStack index its structure.
+- **RAG-Powered Chat:** Ask architecture-level questions and get grounded answers.
+- **File Citations:** Every AI response is linked to the relevant source files.
+- **Interactive File Preview:** Inspect code directly within the chat interface.
+- **Structural Awareness:** Understands classes, functions, and modules, not just raw text.
+
+---
+
+## 🏗️ Project Architecture
+
+```mermaid
+graph TD
+    A[Angular Frontend] -->|API Requests| B[NestJS Backend]
+    B --> C[BullMQ Worker]
+    C -->|Downloads| D[GitHub Repo]
+    C -->|Parses| E[Tree-Sitter / Parser]
+    C -->|Embeds| F[AI Embeddings API]
+    F --> G[(PostgreSQL + pgvector)]
+    B -->|Search| G
+    B -->|Completion| H[LLM - Gemini/Groq]
+```
+
+---
 
 ## 🛠️ Tech Stack
 
-### Frontend (User Interface)
-- **Framework:** Angular 17+ (for a robust, scalable web app)
-- **Styling:** Tailwind CSS & Angular Material (sleek, modern design)
-- **Visuals:** RxJS (reactive state) & Interactive Graph Libraries (for dependency visualization)
+### Frontend
+- **Framework:** Angular 17+ (Standalone Components)
+- **Styling:** Tailwind CSS
+- **Icons:** Lucide Angular
 
-### Backend (The Brain)
-- **Framework:** NestJS (Node.js)
-- **Language:** TypeScript
-- **Task Queue:** BullMQ & Redis (to handle heavy repo indexing in the background)
-- **Parser:** Tree-sitter (understands code structure: classes, functions, etc.)
-
-### AI & Retrieval
-- **LLM API:** (e.g., Gemini or OpenAI) for generating answers.
-- **Embeddings:** Vector representations of code snippets.
-- **Vector DB:** PostgreSQL with `pgvector` (stores the "meaning" of code for fast retrieval).
+### Backend
+- **Framework:** NestJS
+- **Database:** PostgreSQL + `pgvector`
+- **Background Tasks:** BullMQ + Redis
+- **ORM:** TypeORM
 
 ---
 
-## 🏗️ How it Works (The Pipeline)
-1. **Fetch:** User pastes a GitHub URL. The system downloads the repo.
-2. **Filter:** It ignores junk (like `node_modules` or images) and focuses on code.
-3. **Parse & Chunk:** Using *Tree-sitter*, it breaks the code into logical blocks (like a whole function) rather than just random lines.
-4. **Index:** It builds a **Dependency Graph** (who imports what) and a **Module Map**.
-5. **Embed & Store:** Every code chunk is converted into a vector and stored in the database.
-6. **Query:** When you ask a question, the AI searches the vector DB and the dependency graph to find the most relevant context and answers you with citations.
+## 📂 Repository Structure
+
+- `/frontend`: Angular client application.
+- `/backend`: NestJS server application.
+- `/backend/database`: SQL schemas and migration files.
 
 ---
 
-## 📅 Roadmap
-- **V1:** Repo Chat (Basic ingestion + Q&A).
-- **V2:** Structural Awareness (Tree-sitter parsing + Architecture summaries).
-- **V3:** Visual Intelligence (Interactive dependency graphs and UI panels).
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v18+)
+- PostgreSQL with `pgvector` extension
+- Redis (for BullMQ)
+
+### Setup & Running
+
+You can run both the frontend and backend with a single command from the project root.
+
+1.  **Clone the repo:**
+    ```bash
+    git clone https://github.com/TarunyaProgrammer/DevStack-RepoIntelligence.git
+    cd DevStack-RepoIntelligence
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    npm run setup
+    ```
+
+3.  **Configure environment:**
+    Update `backend/.env` with your database and AI API credentials.
+
+4.  **Run in Development Mode:**
+    ```bash
+    npm run dev
+    ```
+
+---
+
+## 📜 Commands
+
+- `npm run setup`: Installs dependencies for root, frontend, and backend.
+- `npm run dev`: Starts both frontend and backend concurrently.
+- `npm run start:backend`: Starts only the backend.
+- `npm run start:frontend`: Starts only the frontend.
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👥 Contributors
+
+See [CONTRIBUTORS.md](CONTRIBUTORS.md) for a list of everyone who has helped build DevStack.
